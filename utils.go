@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"unicode"
 )
 
 func readFile(filename string) [][]int {
@@ -64,11 +65,26 @@ func readFile2(filename string) [][]string {
 	return ret
 }
 
-// func addSums(scores []int) int {
-// 	total := 0
+func addSums(scores []int) int {
+	total := 0
 
-// 	for i := 0; i < len(scores); i++ {
-// 		total += scores[i]
-// 	}
-// 	return total
-// }
+	for i := 0; i < len(scores); i++ {
+		total += scores[i]
+	}
+	return total
+}
+
+func assignPriorities(commonLetter string) []int {
+	assignedPriorities := []int{}
+	for _, letter := range commonLetter {
+		if unicode.IsUpper(letter) {
+			letter -= 38
+			assignedPriorities = append(assignedPriorities, int(letter))
+		}
+		if unicode.IsLower(letter) {
+			letter -= 96
+			assignedPriorities = append(assignedPriorities, int(letter))
+		}
+	}
+	return assignedPriorities
+}

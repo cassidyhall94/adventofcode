@@ -3,17 +3,23 @@ package main
 import (
 	"fmt"
 	"sort"
+	"strings"
 )
 
 func main() {
 	// ret_day1 := readFile("day1_input.txt")
-	ret_day2 := readFile2("day2_input.txt")
+	// ret_day2 := readFile2("day2_input.txt")
+	ret_day3 := readFile2("day3_input.txt")
 	// totalCalories := day1_addSums(ret_day1)
-	totalScore := day2_addScores(ret_day2)
-	totalNewScore := day2_addNewScores(ret_day2)
+	// totalScore := day2_addScores(ret_day2)
+	// totalNewScore := day2_addNewScores(ret_day2)
+	// totalPriorities := day3_sumPriorities(ret_day3)
+	totalThreeElves := day3_sumElvesPriorities(ret_day3)
 	// fmt.Println(totalCalories)
-	fmt.Println(totalScore)
-	fmt.Println(totalNewScore)
+	// fmt.Println(totalScore)
+	// fmt.Println(totalNewScore)
+	// fmt.Println(totalPriorities)
+	fmt.Println(totalThreeElves)
 }
 
 func day1_addSums(ret_day1 [][]int) int {
@@ -150,4 +156,70 @@ func day2_addNewScores(ret_day2 [][]string) int {
 		}
 	}
 	return total
+}
+
+func day3_sumPriorities(ret_day3 [][]string) int {
+	count := 0
+	total := 0
+	commonLetter := ""
+	for _, rucksacks := range ret_day3 {
+		for _, rucksack := range rucksacks {
+			halfLen := len(rucksack) / 2
+			item1 := rucksack[:halfLen]
+			item2 := rucksack[halfLen:]
+			for _, item1Char := range item1 {
+				for _, item2Char := range item2 {
+					if item1Char == item2Char && count == 0 {
+						count++
+						commonLetter += string(item2Char)
+					}
+				}
+			}
+			count = 0
+		}
+	}
+	priorities := assignPriorities(commonLetter)
+	total = addSums(priorities)
+	return total
+}
+
+func day3_sumElvesPriorities(ret_day3 [][]string) int {
+	group := []string{}
+	groups := [][]string{}
+	for _, rucksacks := range ret_day3 {
+		for _, rucksack := range rucksacks {
+			if len(group) < 3 {
+				group = append(group, rucksack)
+				// fmt.Println("GROUPS: ", len(group))
+			} else {
+				groups = append(groups, group)
+				group = []string{}
+			}
+		}
+	}
+	commonLetters := day3_compareGroups(groups)
+	priorities := assignPriorities(commonLetters)
+	total := addSums(priorities)
+	return total
+}
+
+func day3_compareGroups(groups [][]string) string {
+	commonLetters := ""
+	count := 0
+	for _, elfGroup := range groups {
+		firstElf := elfGroup[0]
+		secondElf := elfGroup[1]
+		thirdElf := elfGroup[2]
+		for _, elf1Char := range firstElf {
+			if strings.Contains(secondElf, string(elf1Char)) && strings.Contains(thirdElf, string(elf1Char)) {
+				if count < 3 {
+					count++
+					commonLetters += string(elf1Char)
+				}
+			}
+		}
+		count = 0
+	}
+	fmt.Println(len(commonLetters))
+	return commonLetters
 }
