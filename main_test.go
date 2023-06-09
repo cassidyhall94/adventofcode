@@ -68,3 +68,34 @@ func Test_day3_compareGroups(t *testing.T) {
 		})
 	}
 }
+
+func Test_day3_sumElvesPriorities(t *testing.T) {
+	type args struct {
+		ret_day3 [][]string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    int
+		wantErr bool
+	}{
+		{
+			name: "test case 1 - pass",
+			args: args{
+				ret_day3: [][]string{
+					{"vJrwpWtwJgWrhcsFMMfFFhFp", "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg"},
+					{"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw"},
+				},
+			},
+			want:    70,
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := day3_sumElvesPriorities(tt.args.ret_day3); got != tt.want {
+				t.Errorf("day3_sumElvesPriorities() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

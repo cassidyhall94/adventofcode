@@ -76,14 +76,18 @@ func addSums(scores []int) int {
 
 func assignPriorities(commonLetter string) []int {
 	assignedPriorities := []int{}
+	var assigned int
 	for _, letter := range commonLetter {
 		if unicode.IsUpper(letter) {
 			letter -= 38
-			assignedPriorities = append(assignedPriorities, int(letter))
+			assigned = int(letter)
+			assignedPriorities = append(assignedPriorities, assigned)
 		}
 		if unicode.IsLower(letter) {
 			letter -= 96
-			assignedPriorities = append(assignedPriorities, int(letter))
+			assigned = int(letter)
+			assignedPriorities = append(assignedPriorities, assigned)
+			fmt.Println(assignedPriorities)
 		}
 	}
 	return assignedPriorities

@@ -183,21 +183,25 @@ func day3_sumPriorities(ret_day3 [][]string) int {
 	return total
 }
 
-//TODO: write test for this
 func day3_sumElvesPriorities(ret_day3 [][]string) int {
 	group := []string{}
 	groups := [][]string{}
 	for _, rucksacks := range ret_day3 {
 		for _, rucksack := range rucksacks {
+			fmt.Println("RUCKSACK:", rucksack)
 			if len(group) < 3 {
 				group = append(group, rucksack)
+				fmt.Println("GROUP:", group)
 				// fmt.Println("GROUPS: ", len(group))
-			} else {
+			}
+			if len(group) == 3 {
 				groups = append(groups, group)
 				group = []string{}
 			}
 		}
+
 	}
+	fmt.Println("GROUPS", groups)
 	commonLetters := day3_compareGroups(groups)
 	priorities := assignPriorities(commonLetters)
 	total := addSums(priorities)
@@ -205,26 +209,18 @@ func day3_sumElvesPriorities(ret_day3 [][]string) int {
 }
 
 func day3_compareGroups(groups [][]string) string {
-	// fmt.Println(groups)
 	commonLetters := ""
-	// count := 0
-	for i, elfGroup := range groups {
+	for _, elfGroup := range groups {
 		elfGroup := elfGroup
 		firstElf := elfGroup[0]
 		secondElf := elfGroup[1]
 		thirdElf := elfGroup[2]
 		for _, elf1Char := range firstElf {
 			if strings.Contains(secondElf, string(elf1Char)) && strings.Contains(thirdElf, string(elf1Char)) {
-
 				commonLetters += string(elf1Char)
-
-				fmt.Println("Char: ", string(elf1Char), i, firstElf, secondElf, thirdElf)
-				fmt.Println("letters: ", commonLetters)
-				// }
 				break
 			}
 		}
-		// count = 0
 	}
 	return commonLetters
 }
