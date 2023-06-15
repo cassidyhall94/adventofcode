@@ -92,3 +92,10 @@ func assignPriorities(commonLetter string) []int {
 	}
 	return assignedPriorities
 }
+
+func reverseString(str string) (result string) {
+	for _, v := range str {
+		result = string(v) + result
+	}
+	return
+}

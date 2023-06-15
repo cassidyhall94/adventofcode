@@ -74,10 +74,9 @@ func Test_day3_sumElvesPriorities(t *testing.T) {
 		ret_day3 [][]string
 	}
 	tests := []struct {
-		name    string
-		args    args
-		want    int
-		wantErr bool
+		name string
+		args args
+		want int
 	}{
 		{
 			name: "test case 1 - pass",
@@ -87,8 +86,7 @@ func Test_day3_sumElvesPriorities(t *testing.T) {
 					{"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw"},
 				},
 			},
-			want:    70,
-			wantErr: false,
+			want: 70,
 		},
 	}
 	for _, tt := range tests {
@@ -114,8 +112,12 @@ func Test_day4_calculatePairs(t *testing.T) {
 			name: "test case 1 - pass",
 			args: args{
 				ret_day4: [][]string{
-					{"2-4,6-8", "2-3,4-5"},
-					{"5-7", "7-9"}, {"2-8", "3-7"}, {"6-6", "4-6"}, {"2-6", "4-8"},
+					{"2-4", "6-8"},
+					{"2-3", "4-5"},
+					{"5-7", "7-9"},
+					{"2-8", "3-7"},
+					{"6-6", "4-6"},
+					{"2-6", "4-8"},
 				},
 			},
 			want:    2,
@@ -124,8 +126,46 @@ func Test_day4_calculatePairs(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := day4_calculatePairs(tt.args.ret_day4); got != tt.want {
+			got := day4_calculatePairs(tt.args.ret_day4)
+			if got != tt.want && !tt.wantErr {
 				t.Errorf("day4_calculatePairs() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_fillNumbers(t *testing.T) {
+	type args struct {
+		assignment string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    string
+		wantErr bool
+	}{
+		{
+			name: "test case 1 - pass",
+			args: args{
+				assignment: "24",
+			},
+			want:    "234",
+			wantErr: false,
+		},
+		{
+			name: "test case 2 - pass",
+			args: args{
+				assignment: "66",
+			},
+			want:    "123456",
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := fillNumbers(tt.args.assignment)
+			if got != tt.want && !tt.wantErr {
+				t.Errorf("fillNumbers() = %v, want %v", got, tt.want)
 			}
 		})
 	}

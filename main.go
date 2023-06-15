@@ -229,44 +229,50 @@ func day3_compareGroups(groups [][]string) string {
 	return commonLetters
 }
 
-//TODO: range over ret_day4, split pair on the comma, compare assignments to each other, if all numbers are contained in another, then bool and count true numbers
 func day4_calculatePairs(ret_day4 [][]string) int {
 	count := 0
-	// assignment1Nums := []int{}
-	// assignment2Nums := []int{}
-
 	for _, pairs := range ret_day4 {
-		for _, pair := range pairs {
-			halfLen := len(pair) / 2
-			assignment1 := strings.Replace(pair[:halfLen], ",", "", -1)
-			assignment2 := strings.Replace(pair[halfLen:], ",", "", -1)
-			filledAssignment1 := fillNumbers(assignment1)
-			filledAssignment2 := fillNumbers(assignment2)
-			fmt.Println(pair, "1:", filledAssignment1, "2:", filledAssignment2)
+		joinedPairs := strings.SplitN(strings.Join(pairs, " "), " ", 2)
+		assignment1 := strings.ReplaceAll(joinedPairs[0], ",", "")
+		fmt.Println(joinedPairs)
+			assignment2 := strings.ReplaceAll(joinedPairs[1], ",", "")
+			filledAssignment2 := fillNumbers(strings.ReplaceAll(assignment2, "-", ""))
+			// fmt.Println(pair, "1:", strings.ReplaceAll(assignment1, "-", ""), "2:", strings.ReplaceAll(assignment2, "-", ""))
+			filledAssignment1 := fillNumbers(strings.ReplaceAll(assignment1, "-", ""))
+			fmt.Println(pairs, "fill1:", filledAssignment1, "fill2:", filledAssignment2)
 			if strings.Contains(filledAssignment1, filledAssignment2) == true {
-				// fmt.Println(assignment1 + assignment2, filledAssignment1, filledAssignment2)
 				count++
 			}
-		}
 	}
 	return count
 }
 
 func fillNumbers(assignment string) string {
-	min, err := strconv.Atoi(strings.Replace(assignment[:len(assignment)/2], "-", "", -1))
+	min, err := strconv.Atoi(assignment[:len(assignment)/2])
 	if err != nil {
-		fmt.Println("ATOI error(min):", err)
+		fmt.Println("ATOI error(min):", min, "err:", err)
 	}
-	max, err := strconv.Atoi(strings.Replace(assignment[len(assignment)/2:], "-", "", -1))
+	max, err := strconv.Atoi(assignment[len(assignment)/2:])
 	if err != nil {
 		fmt.Println("ATOI error(max):", err)
 	}
 
 	result := ""
-	// fmt.Println(assignment, min, max)
-	for i := min; i <= max; i++ {
-		if i != 0 {
-			result = result + strconv.Itoa(int(i)) + " "
+	// fmt.Println("ASN:", assignment, "min:", min, "max:", max)
+	if min == max {
+		for i := min; i >= (max-min)+1; i-- {
+			fmt.Println(i)
+			if i != 0 {
+				result = result + strconv.Itoa(int(i))
+			}
+		}
+		result = reverseString(result)
+		fmt.Println(result)
+	} else {
+		for i := min; i <= max; i++ {
+			if i != 0 {
+				result = result + strconv.Itoa(int(i))
+			}
 		}
 	}
 	// fmt.Println("assignment", assignment, "result:", result)
