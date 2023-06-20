@@ -231,23 +231,31 @@ func day3_compareGroups(groups [][]string) string {
 
 func day4_calculatePairs(ret_day4 [][]string) int {
 	count := 0
+	pair1 := ""
+	pair2 := ""
 	for _, pairs := range ret_day4 {
-		joinedPairs := strings.SplitN(strings.Join(pairs, " "), " ", 2)
-		assignment1 := strings.ReplaceAll(joinedPairs[0], ",", "")
-		fmt.Println(joinedPairs)
-			assignment2 := strings.ReplaceAll(joinedPairs[1], ",", "")
-			filledAssignment2 := fillNumbers(strings.ReplaceAll(assignment2, "-", ""))
-			// fmt.Println(pair, "1:", strings.ReplaceAll(assignment1, "-", ""), "2:", strings.ReplaceAll(assignment2, "-", ""))
-			filledAssignment1 := fillNumbers(strings.ReplaceAll(assignment1, "-", ""))
-			fmt.Println(pairs, "fill1:", filledAssignment1, "fill2:", filledAssignment2)
-			if strings.Contains(filledAssignment1, filledAssignment2) == true {
-				count++
+		joinedPairs := strings.ReplaceAll(strings.Join(pairs, ""), ",", "")
+		for _, pair := range joinedPairs {
+			pair1 += string(pair)
+			if string(pair) == " " {
+pair2 
 			}
+		}
+		pair1 := joinedPairs[:len(joinedPairs)/2]
+		pair2 := joinedPairs[len(joinedPairs)/2:]
+		fmt.Println(pairs, pair1, pair2)
+
+		// assignment1 := fillNumbers(strings.ReplaceAll(strings.ReplaceAll(pair1, "-", ""), ",", ""))
+		// assignment2 := fillNumbers(strings.ReplaceAll(strings.ReplaceAll(pair2, "-", ""), ",", ""))
+		// fmt.Println("1:", pair1, "2:", pair2)
+		// if strings.Contains(strings.Join(assignment1, ""), strings.Join(assignment2, "")) == true {
+		// 	count++
+		// }
 	}
 	return count
 }
 
-func fillNumbers(assignment string) string {
+func fillNumbers(assignment string) []string {
 	min, err := strconv.Atoi(assignment[:len(assignment)/2])
 	if err != nil {
 		fmt.Println("ATOI error(min):", min, "err:", err)
@@ -257,24 +265,20 @@ func fillNumbers(assignment string) string {
 		fmt.Println("ATOI error(max):", err)
 	}
 
-	result := ""
-	// fmt.Println("ASN:", assignment, "min:", min, "max:", max)
+	result := []string{}
 	if min == max {
 		for i := min; i >= (max-min)+1; i-- {
-			fmt.Println(i)
 			if i != 0 {
-				result = result + strconv.Itoa(int(i))
+				result = append(result, strconv.Itoa(int(i)))
 			}
 		}
-		result = reverseString(result)
-		fmt.Println(result)
+		reverseString(result)
 	} else {
 		for i := min; i <= max; i++ {
 			if i != 0 {
-				result = result + strconv.Itoa(int(i))
+				result = append(result, strconv.Itoa(int(i)))
 			}
 		}
 	}
-	// fmt.Println("assignment", assignment, "result:", result)
 	return result
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -141,7 +142,7 @@ func Test_fillNumbers(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    string
+		want    []string
 		wantErr bool
 	}{
 		{
@@ -149,7 +150,7 @@ func Test_fillNumbers(t *testing.T) {
 			args: args{
 				assignment: "24",
 			},
-			want:    "234",
+			want:    []string{"2", "3", "4"},
 			wantErr: false,
 		},
 		{
@@ -157,14 +158,14 @@ func Test_fillNumbers(t *testing.T) {
 			args: args{
 				assignment: "66",
 			},
-			want:    "123456",
+			want:    []string{"1", "2", "3", "4", "5", "6"},
 			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := fillNumbers(tt.args.assignment)
-			if got != tt.want && !tt.wantErr {
+			if !reflect.DeepEqual(got, tt.want) && !tt.wantErr {
 				t.Errorf("fillNumbers() = %v, want %v", got, tt.want)
 			}
 		})

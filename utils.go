@@ -93,9 +93,9 @@ func assignPriorities(commonLetter string) []int {
 	return assignedPriorities
 }
 
-func reverseString(str string) (result string) {
-	for _, v := range str {
-		result = string(v) + result
+func reverseString(slice []string) []string {
+	for i, j := 0, len(slice)-1; i < j; i, j = i+1, j-1 {
+		slice[i], slice[j] = slice[j], slice[i]
 	}
-	return
+	return slice
 }
