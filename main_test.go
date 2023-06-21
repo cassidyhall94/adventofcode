@@ -170,3 +170,39 @@ func Test_day4_calculatePairs(t *testing.T) {
 // 		})
 // 	}
 // }
+
+func Test_day4_calculateOverlaps(t *testing.T) {
+	type args struct {
+		ret_day4 []string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    int
+		wantErr bool
+	}{
+		{
+			name: "test case 1 - pass",
+			args: args{
+				ret_day4: []string{
+					"2-4,6-8",
+					"2-3,4-5",
+					"5-7,7-9",
+					"2-8,3-7",
+					"6-6,4-6",
+					"2-6,4-8",
+				},
+			},
+			want:    4,
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := day4_calculateOverlaps(tt.args.ret_day4)
+			if got != tt.want && !tt.wantErr {
+				t.Errorf("day4_calculateOverlaps() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

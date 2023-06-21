@@ -12,18 +12,25 @@ func main() {
 	// ret_day2 := readFile2("day2_input.txt")
 	// ret_day3 := readFile2("day3_input.txt")
 	ret_day4 := readFile3("day4_input.txt")
+
 	// totalCalories := day1_addSums(ret_day1)
+
 	// totalScore := day2_addScores(ret_day2)
 	// totalNewScore := day2_addNewScores(ret_day2)
+
 	// totalPriorities := day3_sumPriorities(ret_day3)
 	// totalThreeElves := day3_sumElvesPriorities(ret_day3)
-	calculatedPairs := day4_calculatePairs(ret_day4)
+
+	// calculatedPairs := day4_calculatePairs(ret_day4)
+	overlappingPairs := day4_calculateOverlaps(ret_day4)
+
 	// fmt.Println(totalCalories)
 	// fmt.Println(totalScore)
 	// fmt.Println(totalNewScore)
 	// fmt.Println(totalPriorities)
 	// fmt.Println(totalThreeElves)
-	fmt.Println(calculatedPairs)
+	// fmt.Println(calculatedPairs)
+	fmt.Println(overlappingPairs)
 }
 
 func day1_addSums(ret_day1 [][]int) int {
@@ -268,4 +275,31 @@ func fillNumbers(assignment string) []string {
 		result = append(result, strconv.Itoa(i))
 	}
 	return result
+}
+
+func day4_calculateOverlaps(ret_day4 []string) int {
+	count := 0
+	for _, pairs := range ret_day4 {
+		pair := strings.Split(pairs, ",")
+		assignment1 := fillNumbers(pair[0])
+		assignment2 := fillNumbers(pair[1])
+		if containsOverlap(assignment1, assignment2) || containsOverlap(assignment2, assignment1) {
+			count++
+		}
+	}
+	return count
+}
+
+func containsOverlap(assignment1, assignment2 []string) bool {
+	for _, num := range assignment1 {
+		fmt.Println(num)
+		for _, n := range assignment2 {
+			fmt.Println(n)
+			if num == n {
+				return true
+			}
+
+		}
+	}
+	return false
 }
