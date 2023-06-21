@@ -11,7 +11,7 @@ func main() {
 	// ret_day1 := readFile("day1_input.txt")
 	// ret_day2 := readFile2("day2_input.txt")
 	// ret_day3 := readFile2("day3_input.txt")
-	ret_day4 := readFile2("day4_input.txt")
+	ret_day4 := readFile3("day4_input.txt")
 	// totalCalories := day1_addSums(ret_day1)
 	// totalScore := day2_addScores(ret_day2)
 	// totalNewScore := day2_addNewScores(ret_day2)
@@ -229,56 +229,43 @@ func day3_compareGroups(groups [][]string) string {
 	return commonLetters
 }
 
-func day4_calculatePairs(ret_day4 [][]string) int {
+func day4_calculatePairs(ret_day4 []string) int {
 	count := 0
-	pair1 := ""
-	pair2 := ""
 	for _, pairs := range ret_day4 {
-		joinedPairs := strings.ReplaceAll(strings.Join(pairs, ""), ",", "")
-		for _, pair := range joinedPairs {
-			pair1 += string(pair)
-			if string(pair) == " " {
-pair2 
-			}
+		pair := strings.Split(pairs, ",")
+		assignment1 := fillNumbers(pair[0])
+		assignment2 := fillNumbers(pair[1])
+		if containsAssignment(assignment1, assignment2) || containsAssignment(assignment2, assignment1) {
+			count++
 		}
-		pair1 := joinedPairs[:len(joinedPairs)/2]
-		pair2 := joinedPairs[len(joinedPairs)/2:]
-		fmt.Println(pairs, pair1, pair2)
-
-		// assignment1 := fillNumbers(strings.ReplaceAll(strings.ReplaceAll(pair1, "-", ""), ",", ""))
-		// assignment2 := fillNumbers(strings.ReplaceAll(strings.ReplaceAll(pair2, "-", ""), ",", ""))
-		// fmt.Println("1:", pair1, "2:", pair2)
-		// if strings.Contains(strings.Join(assignment1, ""), strings.Join(assignment2, "")) == true {
-		// 	count++
-		// }
 	}
 	return count
 }
 
+func containsAssignment(assignment1, assignment2 []string) bool {
+	for _, num := range assignment2 {
+		found := false
+		for _, n := range assignment1 {
+			if num == n {
+				found = true
+				break
+			}
+		}
+		if !found {
+			return false
+		}
+	}
+	return true
+}
+
 func fillNumbers(assignment string) []string {
-	min, err := strconv.Atoi(assignment[:len(assignment)/2])
-	if err != nil {
-		fmt.Println("ATOI error(min):", min, "err:", err)
-	}
-	max, err := strconv.Atoi(assignment[len(assignment)/2:])
-	if err != nil {
-		fmt.Println("ATOI error(max):", err)
-	}
+	numbers := strings.Split(assignment, "-")
+	start, _ := strconv.Atoi(numbers[0])
+	end, _ := strconv.Atoi(numbers[1])
 
 	result := []string{}
-	if min == max {
-		for i := min; i >= (max-min)+1; i-- {
-			if i != 0 {
-				result = append(result, strconv.Itoa(int(i)))
-			}
-		}
-		reverseString(result)
-	} else {
-		for i := min; i <= max; i++ {
-			if i != 0 {
-				result = append(result, strconv.Itoa(int(i)))
-			}
-		}
+	for i := start; i <= end; i++ {
+		result = append(result, strconv.Itoa(i))
 	}
 	return result
 }

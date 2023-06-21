@@ -65,6 +65,31 @@ func readFile2(filename string) [][]string {
 	return ret
 }
 
+func readFile3(filename string) []string {
+	file, err := os.Open(filename)
+	if err != nil {
+		fmt.Println("file open error: %w", err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	cur := ""
+	ret := []string{}
+
+	for scanner.Scan() {
+		if len(scanner.Text()) > 0 {
+			cur += scanner.Text()
+		}
+		ret = append(ret, cur)
+		cur = ""
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Println("file scanner error: %w", err)
+	}
+	return ret
+}
+
 func addSums(scores []int) int {
 	total := 0
 

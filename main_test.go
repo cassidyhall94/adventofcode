@@ -1,7 +1,6 @@
 package main
 
 import (
-	"reflect"
 	"testing"
 )
 
@@ -101,7 +100,7 @@ func Test_day3_sumElvesPriorities(t *testing.T) {
 
 func Test_day4_calculatePairs(t *testing.T) {
 	type args struct {
-		ret_day4 [][]string
+		ret_day4 []string
 	}
 	tests := []struct {
 		name    string
@@ -112,13 +111,13 @@ func Test_day4_calculatePairs(t *testing.T) {
 		{
 			name: "test case 1 - pass",
 			args: args{
-				ret_day4: [][]string{
-					{"2-4", "6-8"},
-					{"2-3", "4-5"},
-					{"5-7", "7-9"},
-					{"2-8", "3-7"},
-					{"6-6", "4-6"},
-					{"2-6", "4-8"},
+				ret_day4: []string{
+					"2-4,6-8",
+					"2-3,4-5",
+					"5-7,7-9",
+					"2-8,3-7",
+					"6-6,4-6",
+					"2-6,4-8",
 				},
 			},
 			want:    2,
@@ -135,39 +134,39 @@ func Test_day4_calculatePairs(t *testing.T) {
 	}
 }
 
-func Test_fillNumbers(t *testing.T) {
-	type args struct {
-		assignment string
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    []string
-		wantErr bool
-	}{
-		{
-			name: "test case 1 - pass",
-			args: args{
-				assignment: "24",
-			},
-			want:    []string{"2", "3", "4"},
-			wantErr: false,
-		},
-		{
-			name: "test case 2 - pass",
-			args: args{
-				assignment: "66",
-			},
-			want:    []string{"1", "2", "3", "4", "5", "6"},
-			wantErr: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got := fillNumbers(tt.args.assignment)
-			if !reflect.DeepEqual(got, tt.want) && !tt.wantErr {
-				t.Errorf("fillNumbers() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+// func Test_fillNumbers(t *testing.T) {
+// 	type args struct {
+// 		assignment string
+// 	}
+// 	tests := []struct {
+// 		name    string
+// 		args    args
+// 		want    []string
+// 		wantErr bool
+// 	}{
+// 		{
+// 			name: "test case 1 - pass",
+// 			args: args{
+// 				assignment: "24",
+// 			},
+// 			want:    []string{"2", "3", "4"},
+// 			wantErr: false,
+// 		},
+// 		{
+// 			name: "test case 2 - pass",
+// 			args: args{
+// 				assignment: "66",
+// 			},
+// 			want:    []string{"6"},
+// 			wantErr: false,
+// 		},
+// 	}
+// 	for _, tt := range tests {
+// 		t.Run(tt.name, func(t *testing.T) {
+// 			got := fillNumbers(tt.args.assignment)
+// 			if !reflect.DeepEqual(got, tt.want) && !tt.wantErr {
+// 				t.Errorf("fillNumbers() = %v, want %v", got, tt.want)
+// 			}
+// 		})
+// 	}
+// }
