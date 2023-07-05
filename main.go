@@ -11,7 +11,8 @@ func main() {
 	// ret_day1 := readFile("day1_input.txt")
 	// ret_day2 := readFile2("day2_input.txt")
 	// ret_day3 := readFile2("day3_input.txt")
-	ret_day4 := readFile3("day4_input.txt")
+	// ret_day4 := readFile3("day4_input.txt")
+	ret_day5 := readFile2("day5_input.txt")
 
 	// totalCalories := day1_addSums(ret_day1)
 
@@ -22,7 +23,9 @@ func main() {
 	// totalThreeElves := day3_sumElvesPriorities(ret_day3)
 
 	// calculatedPairs := day4_calculatePairs(ret_day4)
-	overlappingPairs := day4_calculateOverlaps(ret_day4)
+	// overlappingPairs := day4_calculateOverlaps(ret_day4)
+
+	crate := day5_crates(ret_day5)
 
 	// fmt.Println(totalCalories)
 	// fmt.Println(totalScore)
@@ -30,7 +33,8 @@ func main() {
 	// fmt.Println(totalPriorities)
 	// fmt.Println(totalThreeElves)
 	// fmt.Println(calculatedPairs)
-	fmt.Println(overlappingPairs)
+	// fmt.Println(overlappingPairs)
+	fmt.Println(crate)
 }
 
 func day1_addSums(ret_day1 [][]int) int {
@@ -302,4 +306,13 @@ func containsOverlap(assignment1, assignment2 []string) bool {
 		}
 	}
 	return false
+}
+
+func day5_crates(ret_day5 [][]string) string {
+	for _, line := range ret_day5 {
+		for j, ln := range line {
+			fmt.Println(j, ln)
+		}
+	}
+	return ""
 }
