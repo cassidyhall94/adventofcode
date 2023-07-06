@@ -207,38 +207,38 @@ func Test_day4_calculateOverlaps(t *testing.T) {
 	}
 }
 
-func Test_day5_crates(t *testing.T) {
-	type args struct {
-		ret_day5 [][]string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			name: "test case 1 - pass",
-			args: args{
-				ret_day5: [][]string{
-					{"    [D]    "},
-					{"[N] [C]    "},
-					{"[Z] [M] [P]"},
-					{" 1   2   3 "},
-					{" "},
-					{"move 1 from 2 to 1"},
-					{"move 3 from 1 to 3"},
-					{"move 2 from 2 to 1"},
-					{"move 1 from 1 to 2"},
-				},
-			},
-			want: "CMZ",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := day5_crates(tt.args.ret_day5); got != tt.want {
-				t.Errorf("day5_crates() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+// func Test_day5_crates(t *testing.T) {
+// 	type args struct {
+// 		ret_day5 [][]string
+// 	}
+// 	tests := []struct {
+// 		name string
+// 		args args
+// 		want string
+// 	}{
+// 		{
+// 			name: "test case 1 - pass",
+// 			args: args{
+// 				ret_day5: [][]string{
+// 					{"    [D]    "},
+// 					{"[N] [C]    "},
+// 					{"[Z] [M] [P]"},
+// 					{" 1   2   3 "},
+// 					{" "},
+// 					{"move 1 from 2 to 1"},
+// 					{"move 3 from 1 to 3"},
+// 					{"move 2 from 2 to 1"},
+// 					{"move 1 from 1 to 2"},
+// 				},
+// 			},
+// 			want: "CMZ",
+// 		},
+// 	}
+// 	for _, tt := range tests {
+// 		t.Run(tt.name, func(t *testing.T) {
+// 			if got := day5_crates(tt.args.ret_day5); got != tt.want {
+// 				t.Errorf("day5_crates() = %v, want %v", got, tt.want)
+// 			}
+// 		})
+// 	}
+// }

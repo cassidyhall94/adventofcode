@@ -12,7 +12,7 @@ func main() {
 	// ret_day2 := readFile2("day2_input.txt")
 	// ret_day3 := readFile2("day3_input.txt")
 	// ret_day4 := readFile3("day4_input.txt")
-	ret_day5 := readFile2("day5_input.txt")
+	ret_day5 := readFile3("day5_input.txt")
 
 	// totalCalories := day1_addSums(ret_day1)
 
@@ -25,7 +25,10 @@ func main() {
 	// calculatedPairs := day4_calculatePairs(ret_day4)
 	// overlappingPairs := day4_calculateOverlaps(ret_day4)
 
-	crate := day5_crates(ret_day5)
+	sortedStacks := day5_sortStackNums(ret_day5)
+	sortedResult := day5_crateStackArrays(sortedStacks)
+	fmt.Println(sortedResult)
+	// crate := day5_crates(ret_day5)
 
 	// fmt.Println(totalCalories)
 	// fmt.Println(totalScore)
@@ -34,7 +37,7 @@ func main() {
 	// fmt.Println(totalThreeElves)
 	// fmt.Println(calculatedPairs)
 	// fmt.Println(overlappingPairs)
-	fmt.Println(crate)
+	// fmt.Println(crate)
 }
 
 func day1_addSums(ret_day1 [][]int) int {
@@ -308,11 +311,34 @@ func containsOverlap(assignment1, assignment2 []string) bool {
 	return false
 }
 
-func day5_crates(ret_day5 [][]string) string {
+func day5_crates(ret_day5 []string) string {
+	// for i, line := range ret_day5 {
+	// 	for _, ln := range line {
+	// 		fmt.Println(i, ln)
+	// 	}
+	// }
+	return ""
+}
+
+func day5_sortStackNums(ret_day5 []string) []string {
+	result := []string{}
 	for _, line := range ret_day5 {
-		for j, ln := range line {
-			fmt.Println(j, ln)
+		for j, byte := range line {
+			if string(byte) == " " && j == 0 {
+				result = append(result, line)
+			}
 		}
 	}
-	return ""
+	return result
+}
+
+func day5_crateStackArrays(stackNums []string) [][]string {
+	result := [][]string{}
+	for _, nums := range stackNums {
+		fmt.Println(nums)
+		splitNums := strings.Split(nums, " ")
+		fmt.Printf("%q\n", splitNums)
+
+	}
+	return result
 }
