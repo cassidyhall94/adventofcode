@@ -12,7 +12,8 @@ func main() {
 	// ret_day2 := readFile2("day2_input.txt")
 	// ret_day3 := readFile2("day3_input.txt")
 	// ret_day4 := readFile3("day4_input.txt")
-	ret_day5 := readFile3("day5_input.txt")
+	// ret_day5 := readFile3("day5_input.txt")
+	ret_day5 := readFile3("day5_test.txt")
 
 	// totalCalories := day1_addSums(ret_day1)
 
@@ -25,11 +26,11 @@ func main() {
 	// calculatedPairs := day4_calculatePairs(ret_day4)
 	// overlappingPairs := day4_calculateOverlaps(ret_day4)
 
-	sortedStacks := day5_sortStackNums(ret_day5)
-	sortedResult := day5_crateStackArrays(sortedStacks)
-	fmt.Println(sortedResult)
+	sortedStacksNums := day5_filterStackNums(ret_day5)
+	sortedStackNumArrays := day5_createStackNumArrays(sortedStacksNums)
+	sortedStacks := day5_sortStackNumArrays(sortedStackNumArrays, ret_day5)
 	// crate := day5_crates(ret_day5)
-
+	fmt.Println(sortedStacks)
 	// fmt.Println(totalCalories)
 	// fmt.Println(totalScore)
 	// fmt.Println(totalNewScore)
@@ -320,25 +321,50 @@ func day5_crates(ret_day5 []string) string {
 	return ""
 }
 
-func day5_sortStackNums(ret_day5 []string) []string {
-	result := []string{}
+func day5_filterStackNums(ret_day5 []string) string {
+	result := ""
 	for _, line := range ret_day5 {
-		for j, byte := range line {
-			if string(byte) == " " && j == 0 {
-				result = append(result, line)
-			}
+		if strings.HasPrefix(line, " 1") {
+			result = line
 		}
 	}
 	return result
 }
 
-func day5_crateStackArrays(stackNums []string) [][]string {
+func day5_createStackNumArrays(stackNums string) [][]string {
 	result := [][]string{}
-	for _, nums := range stackNums {
-		fmt.Println(nums)
-		splitNums := strings.Split(nums, " ")
-		fmt.Printf("%q\n", splitNums)
+	cur := []string{}
 
+	splitNums := strings.Split(stackNums, "   ")
+	for _, nums2 := range splitNums {
+		nums2 = strings.ReplaceAll(nums2, " ", "")
+		cur = append(cur, nums2)
+		result = append(result, cur)
+		cur = []string{}
+	}
+	return result
+}
+
+func day5_sortStackNumArrays(stackNumsArrays [][]string, ret_day5 []string) [][]string {
+	newArr := [][]string{}
+	cur := []string{}
+	arr := seperateArray(ret_day5)
+	for _, line := range arr {
+		cur = append(cur, strings.ReplaceAll(line, " ", "*"))
+		newArr = append(newArr, cur)
+		cur = []string{}
+	}
+	fmt.Println(stackNumsArrays)
+	return newArr
+}
+
+func seperateArray(ret_day5 []string) []string {
+	result := []string{}
+	for _, line := range ret_day5 {
+		if strings.Contains(line, "1") && !strings.Contains(strings.ReplaceAll(line, " ", ""), "m") {
+			break
+		}
+		result = append(result, line)
 	}
 	return result
 }
