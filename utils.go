@@ -118,9 +118,19 @@ func assignPriorities(commonLetter string) []int {
 	return assignedPriorities
 }
 
-func reverseString(slice []string) []string {
+func reverseStrings(slice []string) []string {
 	for i, j := 0, len(slice)-1; i < j; i, j = i+1, j-1 {
 		slice[i], slice[j] = slice[j], slice[i]
 	}
 	return slice
+}
+
+func countLetters(crate string) int {
+	count := 0
+	for _, cra := range crate {
+		if unicode.IsLetter(cra) {
+			count++
+		}
+	}
+	return count
 }

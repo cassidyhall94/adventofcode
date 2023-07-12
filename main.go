@@ -5,6 +5,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 func main() {
@@ -12,7 +13,6 @@ func main() {
 	// ret_day2 := readFile2("day2_input.txt")
 	// ret_day3 := readFile2("day3_input.txt")
 	// ret_day4 := readFile3("day4_input.txt")
-	// ret_day5 := readFile3("day5_input.txt")
 	ret_day5 := readFile3("day5_test.txt")
 
 	// totalCalories := day1_addSums(ret_day1)
@@ -26,11 +26,8 @@ func main() {
 	// calculatedPairs := day4_calculatePairs(ret_day4)
 	// overlappingPairs := day4_calculateOverlaps(ret_day4)
 
-	sortedStacksNums := day5_filterStackNums(ret_day5)
-	sortedStackNumArrays := day5_createStackNumArrays(sortedStacksNums)
-	sortedStacks := day5_sortStackNumArrays(sortedStackNumArrays, ret_day5)
-	// crate := day5_crates(ret_day5)
-	fmt.Println("crates:", sortedStacks)
+	crate := day5_crates(ret_day5)
+
 	// fmt.Println(totalCalories)
 	// fmt.Println(totalScore)
 	// fmt.Println(totalNewScore)
@@ -38,7 +35,7 @@ func main() {
 	// fmt.Println(totalThreeElves)
 	// fmt.Println(calculatedPairs)
 	// fmt.Println(overlappingPairs)
-	// fmt.Println(crate)
+	fmt.Println(crate)
 }
 
 func day1_addSums(ret_day1 [][]int) int {
@@ -313,83 +310,32 @@ func containsOverlap(assignment1, assignment2 []string) bool {
 }
 
 func day5_crates(ret_day5 []string) string {
-	// for i, line := range ret_day5 {
-	// 	for _, ln := range line {
-	// 		fmt.Println(i, ln)
-	// 	}
-	// }
-	return ""
-}
-
-func day5_filterStackNums(ret_day5 []string) string {
-	result := ""
-	for _, line := range ret_day5 {
-		if strings.HasPrefix(line, " 1") {
-			result = line
-		}
-	}
-	return result
-}
-
-func day5_createStackNumArrays(stackNums string) [][]string {
-	result := [][]string{}
-	cur := []string{}
-
-	splitNums := strings.Split(stackNums, "   ")
-	for _, nums2 := range splitNums {
-		nums2 = strings.ReplaceAll(nums2, " ", "")
-		cur = append(cur, nums2)
-		result = append(result, cur)
-		cur = []string{}
-	}
-	fmt.Println(result)
-	return result
-}
-
-func day5_sortStackNumArrays(stackNumsArrays [][]string, ret_day5 []string) [][]string {
-	crates := [][]string{}
-	cur := []string{}
-	arr := seperateArray(ret_day5)
-	for _, line := range arr {
-		cur = append(cur, strings.ReplaceAll(line, " ", "*"))
-		crates = append(crates, cur)
-		cur = []string{}
-	}
-	return combineArray(stackNumsArrays, crates)
-}
-
-func seperateArray(ret_day5 []string) []string {
-	result := []string{}
-	for _, line := range ret_day5 {
-		if strings.Contains(line, "1") && !strings.Contains(strings.ReplaceAll(line, " ", ""), "m") {
-			break
-		}
-		result = append(result, line)
-	}
-	return result
-}
-
-func combineArray(stackNumsArrays [][]string, crates [][]string) [][]string {
-	combinedArrays := [][]string{}
-	// cur := []string{}
-	for _, nums := range stackNumsArrays {
-		for _, num := range nums {
-			for _, crate := range crates {
-				for _, cra := range crate {
-					if strings.HasPrefix(cra, "[") {
-						fmt.Println(num, cra)
+	// missingCrateIndex := 3
+	newCrate := ""
+	newCrates := []string{}
+	for _, crates := range reverseStrings(ret_day5) {
+		if strings.Contains(crates, "[") {
+			crates = strings.ReplaceAll(crates, " ", "*")
+			for i, crate := range crates {
+				if unicode.IsLetter(crate) {
+					if i == 1 {
+						newCrate += string(crate)
+						// fmt.Printf("%q\n", newCrate)
 					}
-					// if i == j {
-					// cur = append(cur, num)
-					// cur = append(cur, cra)
-					// combinedArrays = append(combinedArrays, cur)
-					// cur = []string{}
-					// }
-				}
 
+					if i == len(crates)/2 {
+						fmt.Println(i, string(crate))
+						newCrate += string(crate)
+						fmt.Printf("%q\n", newCrate)
+					}
+				}
+			}
+			if len(newCrate) > 1 {
+				newCrates = append(newCrates, newCrate)
+				newCrate = ""
 			}
 		}
-
 	}
-	return combinedArrays
+	fmt.Printf("%q\n", newCrates)
+	return ""
 }
