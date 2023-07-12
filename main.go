@@ -30,7 +30,7 @@ func main() {
 	sortedStackNumArrays := day5_createStackNumArrays(sortedStacksNums)
 	sortedStacks := day5_sortStackNumArrays(sortedStackNumArrays, ret_day5)
 	// crate := day5_crates(ret_day5)
-	fmt.Println(sortedStacks)
+	fmt.Println("crates:", sortedStacks)
 	// fmt.Println(totalCalories)
 	// fmt.Println(totalScore)
 	// fmt.Println(totalNewScore)
@@ -342,20 +342,20 @@ func day5_createStackNumArrays(stackNums string) [][]string {
 		result = append(result, cur)
 		cur = []string{}
 	}
+	fmt.Println(result)
 	return result
 }
 
 func day5_sortStackNumArrays(stackNumsArrays [][]string, ret_day5 []string) [][]string {
-	newArr := [][]string{}
+	crates := [][]string{}
 	cur := []string{}
 	arr := seperateArray(ret_day5)
 	for _, line := range arr {
 		cur = append(cur, strings.ReplaceAll(line, " ", "*"))
-		newArr = append(newArr, cur)
+		crates = append(crates, cur)
 		cur = []string{}
 	}
-	fmt.Println(stackNumsArrays)
-	return newArr
+	return combineArray(stackNumsArrays, crates)
 }
 
 func seperateArray(ret_day5 []string) []string {
@@ -367,4 +367,29 @@ func seperateArray(ret_day5 []string) []string {
 		result = append(result, line)
 	}
 	return result
+}
+
+func combineArray(stackNumsArrays [][]string, crates [][]string) [][]string {
+	combinedArrays := [][]string{}
+	// cur := []string{}
+	for _, nums := range stackNumsArrays {
+		for _, num := range nums {
+			for _, crate := range crates {
+				for _, cra := range crate {
+					if strings.HasPrefix(cra, "[") {
+						fmt.Println(num, cra)
+					}
+					// if i == j {
+					// cur = append(cur, num)
+					// cur = append(cur, cra)
+					// combinedArrays = append(combinedArrays, cur)
+					// cur = []string{}
+					// }
+				}
+
+			}
+		}
+
+	}
+	return combinedArrays
 }
