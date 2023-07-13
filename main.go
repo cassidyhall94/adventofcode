@@ -309,33 +309,29 @@ func containsOverlap(assignment1, assignment2 []string) bool {
 	return false
 }
 
-func day5_crates(ret_day5 []string) string {
+func day5_crates(ret_day5 []string) []string {
 	// missingCrateIndex := 3
-	newCrate := ""
-	newCrates := []string{}
-	for _, crates := range reverseStrings(ret_day5) {
-		if strings.Contains(crates, "[") {
-			crates = strings.ReplaceAll(crates, " ", "*")
-			for i, crate := range crates {
-				if unicode.IsLetter(crate) {
-					if i == 1 {
-						newCrate += string(crate)
-						// fmt.Printf("%q\n", newCrate)
-					}
-
-					if i == len(crates)/2 {
-						fmt.Println(i, string(crate))
-						newCrate += string(crate)
-						fmt.Printf("%q\n", newCrate)
-					}
-				}
-			}
-			if len(newCrate) > 1 {
-				newCrates = append(newCrates, newCrate)
-				newCrate = ""
+	allCrates := getCrates(ret_day5)
+	for i, crates := range allCrates {
+		fmt.Println(i, crates)
+		for _, crate := range crates {
+			if unicode.IsLetter(crate) {
+				fmt.Println(string(crate))
 			}
 		}
 	}
-	fmt.Printf("%q\n", newCrates)
-	return ""
+
+	return []string{}
+}
+
+func getCrates(ret_day5 []string) []string {
+	newCrates := []string{}
+	input := reverseStrings(ret_day5)
+	for _, crates := range input {
+		if strings.Contains(crates, "[") {
+			crates = strings.ReplaceAll(crates, " ", "*")
+			newCrates = append(newCrates, crates)
+		}
+	}
+	return newCrates
 }
