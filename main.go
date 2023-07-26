@@ -309,19 +309,21 @@ func containsOverlap(assignment1, assignment2 []string) bool {
 	return false
 }
 
-func day5_crates(ret_day5 []string) []string {
-	// missingCrateIndex := 3
+func day5_crates(ret_day5 []string) [][]string {
+	newCrates := [][]string{}
+	newCrate := []string{}
 	allCrates := getCrates(ret_day5)
-	for i, crates := range allCrates {
-		fmt.Println(i, crates)
-		for _, crate := range crates {
+	for _, crates := range allCrates {
+		for j, crate := range crates {
 			if unicode.IsLetter(crate) {
-				fmt.Println(string(crate))
+				newCrates = append(newCrates, newCrate)
+				currStack := newCrates[j/4]
+				currStack = append(currStack, string(crate))
+				newCrates[j/4] = currStack
 			}
 		}
 	}
-
-	return []string{}
+	return newCrates
 }
 
 func getCrates(ret_day5 []string) []string {
