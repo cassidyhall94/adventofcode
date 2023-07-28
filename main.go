@@ -309,7 +309,7 @@ func containsOverlap(assignment1, assignment2 []string) bool {
 	return false
 }
 
-func day5_crates(ret_day5 []string) [][]string {
+func day5_crates(ret_day5 []string) string {
 	newCrates := [][]string{}
 	newCrate := []string{}
 	allCrates := getCrates(ret_day5)
@@ -323,7 +323,42 @@ func day5_crates(ret_day5 []string) [][]string {
 			}
 		}
 	}
-	return removeBlankArrays(newCrates)
+	moves := getMoves(ret_day5)
+	result := moveCrates(moves, removeBlankArrays(newCrates))
+	return result
+}
+
+func moveCrates(moves []string, allCrates [][]string) string {
+	result := ""
+	reversedAllCrates := reverseCrates(allCrates)
+	for _, move := range moves {
+
+		convMove0, err := strconv.Atoi(string(move[0]))
+		if err != nil {
+			fmt.Println("strcon.Atoi err:", err)
+		}
+		convMove1, err := strconv.Atoi(string(move[1]))
+		if err != nil {
+			fmt.Println("strcon.Atoi err:", err)
+		}
+		// convMove2, err := strconv.Atoi(string(move[2]))
+		// if err != nil {
+		// 	fmt.Println("strcon.Atoi err:", err)
+		// }
+
+		for i, crates := range reversedAllCrates {
+			if i+1 == convMove1 {
+				// fmt.Println("currCrateI:", i, "\n", crates, "\n", "crateAmount:", convMove0, "origStack:", convMove1-1, "newStack:", convMove2-1)
+				for _, crate := range crates {
+					for index := 0; index <= convMove0; index++ {
+						fmt.Println(crate, index, convMove0)
+					}
+				}
+			}
+		}
+
+	}
+	return result
 }
 
 func getCrates(ret_day5 []string) []string {
@@ -344,6 +379,34 @@ func removeBlankArrays(newCrates [][]string) [][]string {
 		if len(crates) >= 1 {
 			result = append(result, crates)
 		}
+	}
+	return result
+}
+
+func getMoves(ret_day5 []string) []string {
+	result := []string{}
+	input := reverseStrings(ret_day5)
+	currMove := ""
+	for _, moves := range input {
+		for _, move := range moves {
+			if strings.Contains(moves, "move") {
+				if unicode.IsNumber(move) {
+					currMove += string(move)
+					if len(currMove) == 3 {
+						result = append(result, currMove)
+						currMove = ""
+					}
+				}
+			}
+		}
+	}
+	return result
+}
+
+func reverseCrates(crates [][]string) [][]string {
+	result := [][]string{}
+	for _, crate := range crates {
+		result = append(result, reverseStrings(crate))
 	}
 	return result
 }
