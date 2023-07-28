@@ -323,7 +323,7 @@ func day5_crates(ret_day5 []string) [][]string {
 			}
 		}
 	}
-	return newCrates
+	return removeBlankArrays(newCrates)
 }
 
 func getCrates(ret_day5 []string) []string {
@@ -336,4 +336,14 @@ func getCrates(ret_day5 []string) []string {
 		}
 	}
 	return newCrates
+}
+
+func removeBlankArrays(newCrates [][]string) [][]string {
+	result := [][]string{}
+	for _, crates := range newCrates {
+		if len(crates) >= 1 {
+			result = append(result, crates)
+		}
+	}
+	return result
 }
